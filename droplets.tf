@@ -1,22 +1,9 @@
-terraform {
-  required_providers {
-    digitalocean = {
-      source  = "digitalocean/digitalocean"
-      version = "2.3.0"
-    }
-  }
-}
-
-provider "digitalocean" {
-  token = var.do_token
-}
-
 # resource "digitalocean_ssh_key" "default" {
 #   name       = "k8s-ssh-key"
 #   public_key = file(var.public_ssh_key_location)
 # }
 
-data "digitalocean_ssh_key" "my_ssh_key" {
+data "digitalocean_ssh_key" "ssh_key" {
   name = "goffity-macbook-pro"
 }
 
@@ -32,7 +19,9 @@ resource "digitalocean_droplet" "ubuntu-managed" {
   size               = "s-2vcpu-2gb"
   private_networking = true
   # ssh_keys           = [digitalocean_ssh_key.default.fingerprint]
-  ssh_keys = [data.digitalocean_ssh_key.my_ssh_key.id]
+  ssh_keys = [
+    data.digitalocean_ssh_key.ssh_key.id
+  ]
 
   connection {
     user        = "root"

@@ -1,6 +1,5 @@
-variable "do_token" {
-  type = string
-}
+variable "do_token" {}
+# variable "domain_name" {}
 
 variable "public_ssh_key_location" {
   type = string
